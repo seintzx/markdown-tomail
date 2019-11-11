@@ -7,7 +7,7 @@ def param():
     parser = argparse.ArgumentParser(
         description="choose the recipient of the mail")
 
-    group = parser.add_mutually_exclusive_group()
+    group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("-m",
                        "--me",
                        help="send mail to yourself (test purpose)",
