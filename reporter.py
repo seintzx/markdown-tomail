@@ -29,6 +29,7 @@ def create_html(customers, path):
     if not os.path.isfile(path):
         try:
             f = open(path, "w+")
+            f.write("<b>Customers</b>|<b>Events</b>|<b>Activities</b>")
             for customer in customers:
                 f.write("<b>{0}</b>".format(customer) + "||\n")
         except Exception as e:
