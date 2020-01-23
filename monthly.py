@@ -18,15 +18,21 @@ def main():
     customer = cred['customer'].split(",")
     del cred['customer']
 
-    subject = "[Monthly Summary] Andrea Casadei"
-    old_report = "report/monthly-report-{0}-{1}.md".format(
-        dater.get_date()[4],
-        dater.get_date()[1])
-    new_report = "report/monthly-report-{0}-{1}.md".format(
-        dater.get_date()[4],
-        dater.get_date()[3])
+    old_nmonth = dater.get_date()[1]
+    new_nmonth = dater.get_date()[3]
+    curr_nyear = dater.get_date()[4]
 
-    reporter.md_convert(old_report)
+    subject = "[Monthly Summary] {0} {1} - Andrea Casadei".format(
+        curr_nyear, old_nmonth)
+    old_report = "report/monthly-report-{0}-{1}.md".format(
+        curr_nyear, old_nmonth)
+    new_report = "report/monthly-report-{0}-{1}.md".format(
+        curr_nyear, new_nmonth)
+
+    # reporter.md_convert(old_report)
+
+    ## TABLE VERSION
+    reporter.make_table(old_report, "body.html")
 
     try:
         sig = open('signature.html', 'r')
@@ -39,7 +45,6 @@ def main():
         sig.close()
         txt.close()
     body = "Ciao Zoff,<br>" + \
-           "<h1>{0}</h1>".format(dater.get_date()[0]) + \
            "<html> <body>" + \
            "{0}".format(text) + \
            "<br> <br> Saluti,<br>" + \
@@ -47,7 +52,10 @@ def main():
            "</body> </html>"
 
     mailer.send(cred, subject, body)
-    reporter.create(customer, new_report)
+    # reporter.create(customer, new_report)
+
+    ## TABLE VERSION
+    reporter.create_html(customer, new_report)
 
 
 if __name__ == "__main__":
